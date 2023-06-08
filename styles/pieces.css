@@ -1,0 +1,15 @@
+.lightSquare {
+  background-color: #d9b99b;
+}
+
+.darkSquare {
+  background-color: brown;
+}
+
+.darkPiece {
+  fill: black;
+}
+
+.lightPiece {
+  fill: white;
+}
