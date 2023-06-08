@@ -98,11 +98,27 @@ const setup = () => {
         if (
           startRow.includes(startId) && startId + boardWidth * 2 === targetNumber ||
           startId + boardWidth === targetNumber ||
-            startId + boardWidth + 1 === targetNumber ||
-            startId + boardWidth - 1 === targetNumber
+            (startId + boardWidth + 1 === targetNumber && document.querySelector(`[square-nr="${startId + boardWidth + 1}"]`).firstChild) ||
+            (startId + boardWidth - 1 === targetNumber && document.querySelector(`[square-nr="${startId + boardWidth - 1}"]`).firstChild)
         ) {
           return true;
         }
+        break;
+
+        case "knight": 
+        if(
+            startId + boardWidth * 2 + 1 === targetNumber ||
+            startId + boardWidth * 2 + 1 === targetNumber ||
+            startId + boardWidth - 2 === targetNumber ||
+            startId + boardWidth + 2 === targetNumber ||
+            startId - boardWidth * 2 + 1 === targetNumber ||
+            startId - boardWidth * 2 + 1 === targetNumber ||
+            startId - boardWidth - 2 === targetNumber ||
+            startId - boardWidth + 2 === targetNumber
+        ) {
+            return true;
+        }
+        break;
 
     }
   };
