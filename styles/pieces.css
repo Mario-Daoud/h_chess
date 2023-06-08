@@ -6,10 +6,10 @@
   background-color: brown;
 }
 
-.darkPiece {
+.black {
   fill: black;
 }
 
-.lightPiece {
+.white {
   fill: white;
 }
