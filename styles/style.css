@@ -7,6 +7,17 @@
   border: 3px solid black;
 }
 
+.playerWrap {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: gray;
+  color: white;
+  font-weight: bold;
+  padding: 1.5rem 0;
+  font-size: 20px;
+  width: 480px;
+  text-align: center;
+}
+
 .square {
   height: 60px;
   width: 60px;
@@ -29,4 +40,15 @@ path {
 .piece {
   position: relative;
   z-index: 2;
+}
+
+#reset {
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+}
+
+#reset:hover {
+  cursor: pointer;
 }
