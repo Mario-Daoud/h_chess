@@ -61,8 +61,21 @@ const setup = () => {
     if (correctColor) {
       if (takenByOpponent && valid) {
         e.target.parentNode.append(currentElement);
+
+        const targetNumber =
+          Number(e.target.getAttribute("square-nr")) ||
+          Number(e.target.parentNode.getAttribute("square-nr"));
+          if (
+            targetNumber >= 0 &&
+            targetNumber <= 7 &&
+            currentElement.id === "pawn"
+          ) {
+            promotePiece(e.target.parentNode);
+          }
+
         e.target.remove();
         checkForWin();
+        
         changePlayer();
         return;
       }
@@ -80,10 +93,10 @@ const setup = () => {
         const targetNumber =
           Number(e.target.getAttribute("square-nr")) ||
           Number(e.target.parentNode.getAttribute("square-nr"));
-        if (
+          if (
           targetNumber >= 0 &&
           targetNumber <= 7 &&
-          e.target.firstChild.id === "pawn"
+          currentElement.id === "pawn"
         ) {
           promotePiece(e.target);
         }
@@ -1073,12 +1086,12 @@ const setup = () => {
       target.innerHTML = promotionPiece.innerHTML;
       target.firstChild.setAttribute("draggable", "true");
       target.firstChild.firstChild.classList.add(opponentColor);
-      target.firstChild.firstChild.style.height="40px";
-      target.firstChild.firstChild.style.width="40px";
-      target.firstChild.firstChild.style.margin="10px";
+      target.firstChild.firstChild.style.height = "40px";
+      target.firstChild.firstChild.style.width = "40px";
+      target.firstChild.firstChild.style.margin = "10px";
     });
   };
-  
+
   showPromotionModal = (callback) => {
     const promotionModal = document.querySelector("#promotion-modal");
     promotionModal.style.display = "flex";
@@ -1086,7 +1099,7 @@ const setup = () => {
     promotionModal.style.alignItems = "center";
     promotionModal.style.flexWrap = "wrap";
     promotionModal.style.width = "480px";
-  
+
     promotionPieces.forEach((pieceHTML) => {
       const pieceElement = document.createElement("div");
       pieceElement.innerHTML = pieceHTML;
@@ -1096,18 +1109,15 @@ const setup = () => {
       pieceElement.firstChild.firstChild.style.height = "40px";
       promotionModal.appendChild(pieceElement);
     });
-  
-    console.log("promo modal: ", promotionModal);
+
     promotionModal.childNodes.forEach((piece) => {
       piece.addEventListener("click", () => {
-        console.log("piece:", piece);
         promotionPiece = piece;
         promotionModal.innerHTML = "";
         callback();
       });
     });
   };
-  
 
   checkForWin = () => {
     const kings = Array.from(document.querySelectorAll("#king"));
@@ -1155,4 +1165,5 @@ const setup = () => {
     square.addEventListener("drop", dragDrop);
   });
 };
+
 window.addEventListener("load", setup);
