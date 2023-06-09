@@ -9,6 +9,7 @@ const setup = () => {
 
   let startPositionId;
   let currentElement;
+  let promotionPiece;
 
   createBoard = () => {
     startPieces.forEach((piece, i) => {
@@ -76,6 +77,16 @@ const setup = () => {
 
       if (valid) {
         e.target.append(currentElement);
+        const targetNumber =
+          Number(e.target.getAttribute("square-nr")) ||
+          Number(e.target.parentNode.getAttribute("square-nr"));
+        if (
+          targetNumber >= 0 &&
+          targetNumber <= 7 &&
+          e.target.firstChild.id === "pawn"
+        ) {
+          promotePiece(e.target);
+        }
         checkForWin();
         changePlayer();
         return;
@@ -90,15 +101,12 @@ const setup = () => {
     const piece = currentElement.id;
     const startId = Number(startPositionId);
 
-    console.log(startId, targetNumber);
-
     switch (piece) {
       case "pawn":
         const startRow = [];
         for (let i = 48; i < 56; i++) {
           startRow.push(i);
         }
-        console.log(startRow);
 
         if (
           (startId - boardWidth === targetNumber &&
@@ -1058,6 +1066,48 @@ const setup = () => {
         break;
     }
   };
+
+  promotePiece = (target) => {
+    showPromotionModal(() => {
+      const opponentColor = currentPlayerColor === "white" ? "black" : "white";
+      target.innerHTML = promotionPiece.innerHTML;
+      target.firstChild.setAttribute("draggable", "true");
+      target.firstChild.firstChild.classList.add(opponentColor);
+      target.firstChild.firstChild.style.height="40px";
+      target.firstChild.firstChild.style.width="40px";
+      target.firstChild.firstChild.style.margin="10px";
+    });
+  };
+  
+  showPromotionModal = (callback) => {
+    const promotionModal = document.querySelector("#promotion-modal");
+    promotionModal.style.display = "flex";
+    promotionModal.style.justifyContent = "space-around";
+    promotionModal.style.alignItems = "center";
+    promotionModal.style.flexWrap = "wrap";
+    promotionModal.style.width = "480px";
+  
+    promotionPieces.forEach((pieceHTML) => {
+      const pieceElement = document.createElement("div");
+      pieceElement.innerHTML = pieceHTML;
+      pieceElement.firstChild.style.width = "40px";
+      pieceElement.firstChild.style.height = "40px";
+      pieceElement.firstChild.firstChild.style.width = "40px";
+      pieceElement.firstChild.firstChild.style.height = "40px";
+      promotionModal.appendChild(pieceElement);
+    });
+  
+    console.log("promo modal: ", promotionModal);
+    promotionModal.childNodes.forEach((piece) => {
+      piece.addEventListener("click", () => {
+        console.log("piece:", piece);
+        promotionPiece = piece;
+        promotionModal.innerHTML = "";
+        callback();
+      });
+    });
+  };
+  
 
   checkForWin = () => {
     const kings = Array.from(document.querySelectorAll("#king"));
