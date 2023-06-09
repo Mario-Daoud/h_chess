@@ -52,3 +52,11 @@ path {
 #reset:hover {
   cursor: pointer;
 }
+
+#info-display {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0.5rem;
+  width: 480px;
+}

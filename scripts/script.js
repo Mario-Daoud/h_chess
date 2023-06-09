@@ -1133,6 +1133,14 @@ const setup = () => {
         square.firstChild?.setAttribute("draggable", "false");
       });
     }
+
+    if (infoDisplay.textContent === "Black wins!" || infoDisplay.textContent === "White wins!") {
+        document.querySelector("#gameboard").innerHTML = "";
+        setTimeout(() => {
+            infoDisplay.textContent = "";
+        }, 7000)
+        createBoard();
+    }
   };
 
   changePlayer = () => {
